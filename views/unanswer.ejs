@@ -1,0 +1,31 @@
+
+<%- include('partials/header') %>
+
+
+<div class="">
+
+<form class="" action="/questions" method="post">
+
+
+
+<%  for(var i=0;i<ques1.length; i++){ %>
+  <div class="">
+
+      <p>Question<%=i+1%> <%=ques1[i].ques%></p>
+      <input type="checkbox" name="question[i]" value="1">   <%=ques1[i].o1 %></br>
+      <input type="checkbox" name="question[i]" value="2">   <%=ques1[i].o2 %></br>
+      <input type="checkbox" name="question[i]" value="3">   <%=ques1[i].o3 %></br>
+      <input type="checkbox" name="question[i]" value="4">   <%=ques1[i].o4 %></br></br>
+
+
+  </div>
+<% }%>
+
+<button type="submit">Submit</button>
+  </form>
+
+</div>
+
+
+
+<%- include('partials/footer') %>
