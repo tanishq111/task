@@ -236,17 +236,22 @@ app.get("/resume",function(req,res){
     }else{
       if(foundUser){
           ques=foundUser.questions;
-            for(var i=0; i<ques.length;i++){
-              uques.push(ques[i]);
-            }
       }
     }
   });
   Ques.find({},function(err,quesF){
       const aques=quesF;
   });
+var i=0,ans;
+for(;i<ques.length;i++){
+  if(ques[i]!=null)
+  ans=i;
+}
 
+for(var j=ans+1;j<aques.length;j++)
+uques.push(aques[j]);
 
+res.render("resume",{ques3:uques});
 });
 
 
