@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
+const session = require('express-session');
 const mongoose = require("mongoose");
 const Mongoose = require('mongoose').Mongoose;
 const passport = require("passport");
@@ -18,6 +19,11 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+app.use(session({
+  secret: "Tanishq.",
+  resave: false,
+  saveUninitialized: false
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -75,20 +81,19 @@ passport.deserializeUser(function(id, done) {
 });
 
 passport.use(new GoogleStrategy({
-    clientID: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/options",
-    userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
-    passReqToCallback   : true
+    clientID: "1038262990452-9jkrtqq876dc7pb0uo3sb62qm4g1sp03.apps.googleusercontent.com",
+    clientSecret:"P5ObbagAWaW_5uxE_4ThJCWP",
+    callbackURL: "http://localhost:3000/auth/google/options ",
+    userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
     console.log(profile);
 
     User.findOrCreate({ googleId: profile.id }, function (err, user) {
-      return cb(err, user);
-    });
-  }
-));
+        return cb(err, user);
+      });
+    }
+  ));
 
 app.get("/", function(req, res){
   res.render("home");
@@ -255,9 +260,9 @@ res.render("resume",{ques3:uques});
 });
 
 
-app.get("/success",function(req,res){
-res.render("success");
-});
+// app.get("/success",function(req,res){
+// res.render("success");
+// });
 
   app.listen(3000, function() {
     console.log("Server started on port 3000.");
